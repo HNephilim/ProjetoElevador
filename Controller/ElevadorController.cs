@@ -12,7 +12,7 @@ namespace ProjetoElevador.Controller
     {
         //Objeto Elevador controlado por essa COntroller.
         //View apenas contem metodos estaticos.
-        Elevador _elevador;
+        ElevadorModel _elevador;
 
         //Constroi o Contoller pegando as informações do usuário e cria também o objeto do elevador.
         public ElevadorController()
@@ -27,7 +27,8 @@ namespace ProjetoElevador.Controller
 
                 try
                 {
-                    _elevador = Elevador.Inicializar(capacidadeDePessoas, andaresDoPredio);
+                    _elevador = new ElevadorModel();
+                    _elevador.Inicializar(capacidadeDePessoas, andaresDoPredio);
                 }
                 catch(Exception ex)
                 {
@@ -42,11 +43,39 @@ namespace ProjetoElevador.Controller
 
         }
 
+        //Pega o input do usuário
+        public void InputUsuario()
+        {
+            int input = int.Parse(Console.ReadLine());
+
+            if (input < 0 || input > 4)
+            {
+                throw new Exception("Comando inválido!");
+            }
+
+            switch (input)
+            {
+                case 0:
+                    _elevador.Entrar();
+                    break;
+                case 1:
+                    _elevador.Sair();
+                    break;
+                case 2:
+                    _elevador.Subir();
+                    break;
+                case 3:
+                    _elevador.Descer();    
+                    break;
+                default:
+                    break;
+            }
+        }
+
         //Coloca na tela o que foi necessário
         public void Print()
         {
-            ElevadorView.View(_elevador);
-            Console.ReadLine();
+            ElevadorView.View(_elevador);            
         }
 
 
@@ -60,7 +89,13 @@ namespace ProjetoElevador.Controller
                 Console.WriteLine("Insira a quantidade de andares no prédio");
                 try
                 {
-                    andares = int.Parse(Console.ReadLine());
+                    andares = int.Parse(Console.ReadLine());                   
+
+                    if (andares < 1 || andares > 999)
+                    {
+                        throw new Exception("Total de Andares tem que ser maior que 1 e menor que 999");
+                    }
+
                 }
                 catch (Exception)
                 {
@@ -85,6 +120,10 @@ namespace ProjetoElevador.Controller
                 try
                 {
                     capPessoas = int.Parse(Console.ReadLine());
+                    if (capPessoas < 1 || capPessoas > 999)
+                    {
+                        throw new Exception("Capacidade tem que ser maior que 1 e menor que 999");
+                    }
                 }
                 catch (Exception)
                 {

@@ -17,6 +17,7 @@ namespace ProjetoElevador
                 try
                 {
                     elevadorController.Print();
+                    elevadorController.InputUsuario();
 
                 }
                 catch (Exception ex)
